@@ -286,7 +286,7 @@ public class Manager {
 //                System.out.println("fileStatusChangedVirtualFile");
                 doCompareAndUpdate(virtualFile);
             }
-        });
+        }, () -> {});
 
     }
 

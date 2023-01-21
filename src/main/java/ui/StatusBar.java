@@ -1,7 +1,7 @@
 package ui;
 
 import com.intellij.dvcs.DvcsUtil;
-import com.intellij.openapi.components.Service;
+import com.intellij.ide.DataManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.ListPopup;
 import com.intellij.openapi.wm.StatusBarWidget;
@@ -46,12 +46,21 @@ public class StatusBar extends MyDvcsStatusWidget<GitRepository> {
         return DvcsUtil.guessCurrentRepositoryQuick(project, GitUtil.getRepositoryManager(project), mySettings.getRecentRootPath());
     }
 
+//    @NotNull
+//    @Override
+//    protected ListPopup getPopup(@NotNull Project project, @NotNull GitRepository repository) {
+//
+////        DataManager.getInstance().getDataContext(this.getComponent()));
+//        MyGitBranchPopup myGitBranchPopup = MyGitBranchPopup.getInstance(project, repository);
+//        myGitBranchPopup.setPopupLastOpenedAtList();
+//        return myGitBranchPopup.asListPopup();
+//    }
+
     @NotNull
     @Override
     protected ListPopup getPopup(@NotNull Project project, @NotNull GitRepository repository) {
-        MyGitBranchPopup myGitBranchPopup = MyGitBranchPopup.getInstance(project, repository);
-        myGitBranchPopup.setPopupLastOpenedAtList();
-        return myGitBranchPopup.asListPopup();
+        return MyGitBranchPopup.getInstance(project, repository, DataManager.getInstance().getDataContext(myStatusBar.getComponent()))
+                .asListPopup();
     }
 
     @Override

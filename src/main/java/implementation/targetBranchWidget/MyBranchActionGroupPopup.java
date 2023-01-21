@@ -4,10 +4,7 @@ import com.intellij.dvcs.ui.BranchActionGroup;
 import com.intellij.dvcs.ui.LightActionGroup;
 import com.intellij.dvcs.ui.PopupElementWithAdditionalInfo;
 import com.intellij.ide.util.PropertiesComponent;
-import com.intellij.openapi.actionSystem.ActionGroup;
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.EmptyAction;
+import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.DumbAwareAction;
@@ -44,16 +41,17 @@ public class MyBranchActionGroupPopup extends BranchActionGroupPopup {
 //  static final String BRANCH_POPUP = "GitScopeBranchWidget";
 
     private Project project;
-    //  protected MyList myList;
     private MyPopupListElementRenderer myListElementRenderer;
 
     public MyBranchActionGroupPopup(@NotNull String title,
                                     @NotNull Project project,
                                     @NotNull Condition<AnAction> preselectActionCondition,
                                     @NotNull ActionGroup actions,
-                                    @Nullable String dimensionKey) {
+                                    @Nullable String dimensionKey,
+                                    @NotNull DataContext dataContext
+                                    ) {
 
-        super(title, project, preselectActionCondition, actions, dimensionKey);
+        super(title, project, preselectActionCondition, actions, dimensionKey, dataContext);
         this.project = project;
 
     }
@@ -313,7 +311,7 @@ public class MyBranchActionGroupPopup extends BranchActionGroupPopup {
         boolean shouldBeShown();
     }
 
-    private static class HideableActionGroup extends EmptyAction.MyDelegatingActionGroup implements MoreHideableActionGroup, DumbAware {
+    private static class HideableActionGroup extends ActionGroupWrapper implements MoreHideableActionGroup, DumbAware {
         @NotNull private final MoreAction myMoreAction;
 
         private HideableActionGroup(@NotNull ActionGroup actionGroup, @NotNull MoreAction moreAction) {

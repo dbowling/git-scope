@@ -172,7 +172,7 @@ public class MyLineStatusTrackerImpl {
             }
 
             VirtualFile vcsFile;
-            Boolean isOperationUseful = false;
+            boolean isOperationUseful = false;
             ContentRevision contentRevision = null;
 
             for (Change change : changes) {

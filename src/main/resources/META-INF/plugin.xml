@@ -1,5 +1,8 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
     <id>Git Scope</id>
     <name>Git Scope</name>
     <description>
@@ -7,14 +10,16 @@
         2. Adapts the Line Status according to your **GIT SCOPE**. Usually this built-in feature shows only the current "HEAD" changes.
         3. Adds a Custom *Scope* (inspections, search/replaces, ect) "Git Scope (Files)", which means search results will be filtered according to **GIT SCOPE**
     </description>
-    <version>3.0.4</version>
+    <version>3.0.6</version>
     <vendor>Michael Wölk</vendor>
 
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="194"/>
 
-    <depends>com.intellij.modules.lang</depends>
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
     <depends>Git4Idea</depends>
+
+    <idea-version since-build="203"/>
 
     <!-- Plugin's application components (On Start IDE) -->
     <application-components>
@@ -31,11 +36,12 @@
         </component>
     </project-components>
 
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
 
-        <!-- Tool window -->
-<!--        <toolWindow id="Git Scope" secondary="true" anchor="right" factoryClass="myToolWindow.MyToolWindowFactory"/>-->
-        <toolWindow id="Git Scope" secondary="true" anchor="right" factoryClass="ui.ToolWindowUIFactory"/>
+        <!-- ToolWindow -->
+        <toolWindow id="Git Scope" secondary="true" anchor="left" factoryClass="ui.ToolWindowUIFactory"/>
 
         <!-- Config (Persistent) -->
         <projectService serviceImplementation="state.State"/>
