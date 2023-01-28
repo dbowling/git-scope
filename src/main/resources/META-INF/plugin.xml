@@ -6,20 +6,23 @@
     <id>Git Scope</id>
     <name>Git Scope</name>
     <description>
-        1. Adds a tool window with a change browser (similar to Version Control) which shows the current diff of your **GIT SCOPE**.
-        2. Adapts the Line Status according to your **GIT SCOPE**. Usually this built-in feature shows only the current "HEAD" changes.
-        3. Adds a Custom *Scope* (inspections, search/replaces, ect) "Git Scope (Files)", which means search results will be filtered according to **GIT SCOPE**
+        1. Adds a tool window with a change browser (similar to Version Control) which shows the current diff of your
+        **GIT SCOPE**.
+        2. Adapts the Line Status according to your **GIT SCOPE**. Usually this built-in feature shows only the current
+        "HEAD" changes.
+        3. Adds a Custom *Scope* (inspections, search/replaces, ect) "Git Scope (Files)", which means search results
+        will be filtered according to **GIT SCOPE**
     </description>
     <version>3.0.6</version>
-    <vendor>Michael Wölk</vendor>
-
+    <vendor>WoelkIT</vendor>
+    <change-notes>Fixed compatibility issues for latest versions, removed internal API usage, added logo and toolbar icon</change-notes>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
     <depends>Git4Idea</depends>
 
-    <idea-version since-build="203"/>
+    <idea-version since-build="211"/>
 
     <!-- Plugin's application components (On Start IDE) -->
     <application-components>
@@ -41,12 +44,17 @@
     <extensions defaultExtensionNs="com.intellij">
 
         <!-- ToolWindow -->
-        <toolWindow id="Git Scope" secondary="true" anchor="left" factoryClass="ui.ToolWindowUIFactory"/>
-
+        <toolWindow
+                id="Git Scope"
+                secondary="true"
+                icon="AllIcons.Actions.Diff"
+                anchor="left"
+                factoryClass="ui.ToolWindowUIFactory"
+        />
         <!-- Config (Persistent) -->
         <projectService serviceImplementation="state.State"/>
 
-        <projectService serviceImplementation="implementation.Manager" />
+        <projectService serviceImplementation="implementation.Manager"/>
 
         <statusBarWidgetProvider implementation="ui.TargetBranchStatusWidgetProvider"/>
 

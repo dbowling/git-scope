@@ -90,8 +90,7 @@ public class BranchActionGroupPopup extends FlatSpeedSearchPopup {
 
     @Nullable
     private static String buildDimensionKey(@Nullable final String initialDimensionKey) {
-        if (initialDimensionKey == null) return null;
-        return ExperimentalUI.isNewUI() ? initialDimensionKey + EXPERIMENTAL_UI_DIMENSION_KEY_SUFFIX : initialDimensionKey;
+        return initialDimensionKey;
     }
 
     private void createTitlePanelToolbar(@NotNull String dimensionKey) {
@@ -371,7 +370,7 @@ public class BranchActionGroupPopup extends FlatSpeedSearchPopup {
             }
             super.customizeComponent(list, value, isSelected);
             if (mySeparatorComponent.isVisible()) {
-                boolean hideLineAboveCaption = !ExperimentalUI.isNewUI() && StringUtil.isNotEmpty(mySeparatorComponent.getCaption());
+                boolean hideLineAboveCaption = StringUtil.isNotEmpty(mySeparatorComponent.getCaption());
                 ((GroupHeaderSeparator)mySeparatorComponent).setHideLine(myCurrentIndex == 0 || hideLineAboveCaption);
             }
 
