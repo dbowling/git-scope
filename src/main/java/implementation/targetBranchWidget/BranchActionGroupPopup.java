@@ -69,7 +69,7 @@ public class BranchActionGroupPopup extends FlatSpeedSearchPopup {
                                   @Nullable String dimensionKey,
                                   @NotNull DataContext dataContext) {
         super(title,
-                ActionGroupUtil.forceRecursiveUpdateInBackground(createBranchSpeedSearchActionGroup(actions)),
+                createBranchSpeedSearchActionGroup(actions),
                 dataContext, preselectActionCondition, true);
 
         getTitle().setBackground(JBColor.PanelBackground);
@@ -290,7 +290,11 @@ public class BranchActionGroupPopup extends FlatSpeedSearchPopup {
             getList().repaint();
         }
         else {
-            super.handleSelect(handleFinalChoices, e);
+            try {
+                super.handleSelect(handleFinalChoices, e);
+            } catch (Throwable ex) {
+                // n
+            }
         }
     }
 

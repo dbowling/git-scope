@@ -49,7 +49,7 @@ public class MyBranchActionGroupPopup extends BranchActionGroupPopup {
                                     @NotNull ActionGroup actions,
                                     @Nullable String dimensionKey,
                                     @NotNull DataContext dataContext
-                                    ) {
+    ) {
 
         super(title, project, preselectActionCondition, actions, dimensionKey, dataContext);
         this.project = project;
@@ -68,7 +68,7 @@ public class MyBranchActionGroupPopup extends BranchActionGroupPopup {
         if (myBranchAction != null) {
 
             if (e instanceof MouseEvent) {
-                if(clickedAtIcon(((MouseEvent)e).getPoint())) {
+                if (clickedAtIcon(((MouseEvent) e).getPoint())) {
                     myBranchAction.toggle();
                     getList().repaint();
                     return;
@@ -92,7 +92,8 @@ public class MyBranchActionGroupPopup extends BranchActionGroupPopup {
     protected boolean shouldBeShowing(@NotNull AnAction action) {
         if (!super.shouldBeShowing(action)) return false;
         if (getSpeedSearch().isHoldingFilter()) return !(action instanceof MyBranchActionGroupPopup.MoreAction);
-        if (action instanceof MyBranchActionGroupPopup.MoreHideableActionGroup) return ((MyBranchActionGroupPopup.MoreHideableActionGroup)action).shouldBeShown();
+        if (action instanceof MyBranchActionGroupPopup.MoreHideableActionGroup)
+            return ((MyBranchActionGroupPopup.MoreHideableActionGroup) action).shouldBeShown();
         if (action instanceof MyGitBranchPopupActions.TargetBranchAction) {
             return !((MyGitBranchPopupActions.TargetBranchAction) action).getHide();
         }
@@ -156,13 +157,11 @@ public class MyBranchActionGroupPopup extends BranchActionGroupPopup {
 
                 if (isSelected) {
                     setSelected(infoLabel);
-                }
-                else {
+                } else {
                     infoLabel.setBackground(getBackground());
                     infoLabel.setForeground(JBColor.GRAY);    // different foreground than for other elements
                 }
-            }
-            else {
+            } else {
                 infoLabel.setVisible(false);
             }
         }
@@ -211,12 +210,16 @@ public class MyBranchActionGroupPopup extends BranchActionGroupPopup {
 
     private static class MoreAction extends DumbAwareAction implements KeepingPopupOpenAction {
 
-        @NotNull private final Project myProject;
-        @Nullable private final String mySettingName;
+        @NotNull
+        private final Project myProject;
+        @Nullable
+        private final String mySettingName;
         private final boolean myDefaultExpandValue;
         private boolean myIsExpanded;
-        @NotNull private final String myToCollapseText;
-        @NotNull private final String myToExpandText;
+        @NotNull
+        private final String myToCollapseText;
+        @NotNull
+        private final String myToExpandText;
 
         MoreAction(@NotNull Project project,
                    int numberOfHiddenNodes,
@@ -240,7 +243,11 @@ public class MyBranchActionGroupPopup extends BranchActionGroupPopup {
             setExpanded(!myIsExpanded);
 
             Manager manager = ServiceManager.getService(myProject, Manager.class);
-            manager.getToolWindowUI().showTargetBranchPopup();
+            try {
+                manager.getToolWindowUI().showTargetBranchPopup(e);
+            } catch (Throwable ex) {
+                // no
+            }
 
         }
 
@@ -301,8 +308,7 @@ public class MyBranchActionGroupPopup extends BranchActionGroupPopup {
                 parentGroup.add(i < maxIndex ? myBranchAction : new HideableActionGroup(actionGroup, moreAction));
             }
             parentGroup.add(moreAction);
-        }
-        else {
+        } else {
             parentGroup.addAll(actionList);
         }
     }
@@ -312,7 +318,8 @@ public class MyBranchActionGroupPopup extends BranchActionGroupPopup {
     }
 
     private static class HideableActionGroup extends ActionGroupWrapper implements MoreHideableActionGroup, DumbAware {
-        @NotNull private final MoreAction myMoreAction;
+        @NotNull
+        private final MoreAction myMoreAction;
 
         private HideableActionGroup(@NotNull ActionGroup actionGroup, @NotNull MoreAction moreAction) {
             super(actionGroup);

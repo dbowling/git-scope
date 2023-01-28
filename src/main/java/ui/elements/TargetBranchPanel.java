@@ -2,6 +2,7 @@ package ui.elements;
 
 import com.intellij.dvcs.DvcsUtil;
 import com.intellij.ide.DataManager;
+import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.ListPopup;
@@ -10,6 +11,7 @@ import git4idea.config.GitVcsSettings;
 import git4idea.repo.GitRepository;
 import implementation.Manager;
 import implementation.targetBranchWidget.MyGitBranchPopup;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import utils.Git;
 
@@ -123,14 +125,14 @@ public class TargetBranchPanel extends JPanel implements Element {
 
     }
 
-    public void showPopup() {
+    public void showPopup(@NotNull AnActionEvent e) {
 
 //        System.out.println("showPopup");
         GitVcsSettings mySettings = GitVcsSettings.getInstance(project);
         @Nullable GitRepository repository = DvcsUtil.guessCurrentRepositoryQuick(project, GitUtil.getRepositoryManager(project), mySettings.getRecentRootPath());
 //        GitBranchesUsageCollector.branchWidgetClicked();
         assert repository != null;
-        MyGitBranchPopup myGitBranchPopup = MyGitBranchPopup.getInstance(project, repository, DataContext.EMPTY_CONTEXT);
+        MyGitBranchPopup myGitBranchPopup = MyGitBranchPopup.getInstance(project, repository, e.getDataContext());
         Object lastOpenedAt = myGitBranchPopup.getLastOpenedAt();
 
 //        System.out.println(lastOpenedAt);
